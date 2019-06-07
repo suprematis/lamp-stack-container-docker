@@ -1,0 +1,21 @@
+php:
+  image: php:7.2-apache
+  links:
+    - db:mysql
+  ports:
+    - 8080:80
+db:
+  image: mariadb:10.4.5-bionic
+  environment:
+    MYSQL_ROOT_PASSWORD: examplepass
+    MYSQL_DATABASE: test
+    MYSQL_USER: user01
+    MYSQL_PASSWORD: secret!!
+  volumes:
+    - ./db/custom.conf:/etc/mysql/conf.d
+phpmyadmin:
+  image: phpmyadmin/phpmyadmin
+  links:
+    - db
+  ports:
+    - 8181:80
